@@ -2,7 +2,7 @@
 
 ## Application Architecture
 
-![Application Architecture](../docs/architecture.svg)
+![Application Architecture](./docs/application-architecture.svg)
 
 ## Authorization with GraphQL
 
