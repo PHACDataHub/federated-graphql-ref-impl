@@ -21,7 +21,7 @@ function getClaims(req) {
 
     // Remove Bearer from string
     token = token.replace(/^Bearer\s+/, "");
-
+    // TODO: this needs to fail gracefully if there is no token or token is invalid
     if (token) {
         claims = jwt.verify(token, JWT_VERIFY_SECRET);
     }

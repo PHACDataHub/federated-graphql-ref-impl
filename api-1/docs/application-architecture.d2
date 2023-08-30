@@ -1,0 +1,38 @@
+index\.js: {
+  ApolloServer: {
+    Schema: {
+      typeDefs
+      resolvers
+    }
+    Middleware: {
+      permissions
+    }
+  }
+}
+
+schema\.js: {
+  typeDefs: {
+    explanation: |md
+      GraphQL Schema definition.
+    |
+  }
+}
+
+resolvers\.js
+
+permissions\.js: {
+  custom rules: {
+    explanation: |md
+      Custom Authz rules
+    |
+  }
+  permissions: {
+    explanation: |md
+      Overlay of `typeDef` with Authz policies
+    |
+  }
+  permissions -> custom rules: "uses"
+}
+
+schema\.js.typeDefs -> index\.js.ApolloServer.Schema.typeDefs: "exports"
+permissions\.js.permissions -> index\.js.ApolloServer.Middleware.permissions: "exports"
