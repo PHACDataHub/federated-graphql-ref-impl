@@ -1,0 +1,187 @@
+# Data Product Example: Province of Quebec
+
+Province of Quebec: {
+  shape: cloud
+  style: {
+    stroke: green
+  }
+  IAM: {
+    IAM Tenant: {
+      shape: image
+      icon: https://icons.terrastruct.com/azure%2FIdentity%20Service%20Color%2FActive%20Directory.svg
+    }
+    Security Group A: {
+      shape: image
+      icon: https://icons.terrastruct.com/azure%2FNetworking%20Service%20Color%2FApplication%20Security%20Groups.svg
+    }
+    Security Group B: {
+      shape: image
+      icon: https://icons.terrastruct.com/azure%2FNetworking%20Service%20Color%2FApplication%20Security%20Groups.svg
+    }
+    Users A: {
+      shape: image
+      icon: https://icons.terrastruct.com/essentials%2F359-users.svg
+    }
+    Users B: {
+      shape: image
+      icon: https://icons.terrastruct.com/essentials%2F359-users.svg
+    }
+    JWT Claims A: {
+      shape: image
+      icon: https://jwt.io/img/icon.svg
+    }
+    JWT Claims B: {
+      shape: image
+      icon: https://jwt.io/img/icon.svg
+    }
+    # User Group A gets JWT Claims A via membership in Security Group A
+    JWT Claims A -> Users A <- Security Group A
+    # Same thing with Group B
+    JWT Claims B -> Users B <- Security Group B
+  }
+  Data Product API: {
+    shape: image
+    icon: assets/graphql-logo.svg
+  }
+  Differential Privacy Engine: {
+    shape: image
+    icon: https://icons.terrastruct.com/azure%2FIdentity%20Service%20Color%2FConditional%20Access.svg
+  }
+  Database: {
+    shape: image
+    icon: https://icons.terrastruct.com/azure%2FDatabases%20Service%20Color%2FAzure%20Database%20for%20PostgreSQL%20servers.svg
+  }
+
+  # Data Product API fetches requested data from database
+  Data Product API -> Database: "[5] API calls DB"
+  # Differential Privacy impl. censors data instances based on JWT claims of current request context
+  Database -> Differential Privacy Engine: "[6] JWT Claims Evaluated Against Privacy Rules"
+  # Data Product API only returns fields that comply with the claims of the current request
+  Differential Privacy Engine -> Data Product API: "[7] Censored Data Returned"
+}
+
+# Data Product Example: Province of Ontario
+
+Province of Ontario: {
+  shape: cloud
+  style: {
+    stroke: green
+  }
+  IAM: {
+    Security Group A: {
+      shape: image
+      icon: https://icons.terrastruct.com/aws%2FSecurity%2C%20Identity%2C%20&%20Compliance%2FAWS-Identify-and-Access-Management_IAM.svg
+    }
+    Security Group B: {
+      shape: image
+      icon: https://icons.terrastruct.com/aws%2FSecurity%2C%20Identity%2C%20&%20Compliance%2FAWS-Identify-and-Access-Management_IAM.svg
+    }
+    Users A: {
+      shape: image
+      icon: https://icons.terrastruct.com/aws%2F_General%2FUsers_light-bg.svg
+    }
+    Users B: {
+      shape: image
+      icon: https://icons.terrastruct.com/aws%2F_General%2FUsers_light-bg.svg
+    }
+    JWT Claims A: {
+      shape: image
+      icon: https://jwt.io/img/icon.svg
+    }
+    JWT Claims B: {
+      shape: image
+      icon: https://jwt.io/img/icon.svg
+    }
+    # User Group A gets JWT Claims A via membership in Security Group A
+    JWT Claims A -> Users A <- Security Group A
+    # Same thing with Group B
+    JWT Claims B -> Users B <- Security Group B
+
+    IAM Tenant: {
+      shape: image
+      icon: https://icons.terrastruct.com/aws%2FSecurity%2C%20Identity%2C%20&%20Compliance%2FAWS-Identify-and-Access-Management_IAM.svg
+    }
+  }
+  Data Product API: {
+    shape: image
+    icon: assets/graphql-logo.svg
+  }
+  Differential Privacy Engine: {
+    shape: image
+    icon: https://icons.terrastruct.com/azure%2FIdentity%20Service%20Color%2FConditional%20Access.svg
+  }
+  Database: {
+    shape: image
+    icon: https://icons.terrastruct.com/aws%2FDatabase%2FDatabase.svg
+  }
+
+  # Data Product API fetches requested data from database
+  Data Product API -> Database
+  # Differential Privacy impl. censors data instances based on JWT claims of current request context
+  Database -> Differential Privacy Engine
+  # Data Product API only returns fields that comply with the claims of the current request
+  Differential Privacy Engine -> Data Product API
+}
+
+# Data Product Example: DMIA DS Project
+
+# DMIA Data Science Project: {
+#   shape: cloud
+
+#   IAM Tenant: {
+#     shape: image
+#     icon: https://icons.terrastruct.com/gcp%2FProducts%20and%20services%2FSecurity%2FCloud%20IAM.svg
+#   }
+
+#   Data Product: {
+#     Data Product API: {
+#       shape: image
+#       icon: assets/graphql-logo.svg
+#     }
+#     Differential Privacy Engine: {
+#       shape: image
+#       icon: https://icons.terrastruct.com/azure%2FIdentity%20Service%20Color%2FConditional%20Access.svg
+#     }
+#     Database: {
+#       shape: image
+#       icon: https://icons.terrastruct.com/azure%2FDatabases%20Service%20Color%2FAzure%20Database%20for%20PostgreSQL%20servers.svg
+#     }
+#   }
+
+#   Data Science Playground: {
+#     Data Scientist.shape: person
+#   }
+# }
+
+# Federated API Gateway
+
+PHAC Federated Gateway: {
+  API Gateway: {
+    shape: image
+    icon: assets/graphql-logo.svg
+  }
+
+  IDP Aggregator: {
+    shape: image
+    icon: https://raw.githubusercontent.com/ory/.github/README/img/ory.png
+  }
+}
+
+# API Client
+
+Data Consumer.shape: person
+
+# IDP Aggregator
+PHAC Federated Gateway.IDP Aggregator <-> Province of Quebec.IAM.IAM Tenant: "[2] Delegate Authn/Authz"
+PHAC Federated Gateway.IDP Aggregator <-> Province of Ontario.IAM.IAM Tenant
+# PHAC Federated Gateway.IDP Aggregator -> DMIA Data Science Project.IAM Tenant
+
+# GraphQL gateway pushes delegates queries to federated provider-specific GraphQL APIs
+PHAC Federated Gateway.API Gateway -> Province of Quebec.Data Product API: "[4] Delegate Request w/ JWT"
+PHAC Federated Gateway.API Gateway -> Province of Ontario.Data Product API
+# PHAC Federated Gateway.API Gateway -> DMIA Data Science Project.Data Product API
+
+# Client authenticates with IDP aggregator, which delegates SSO to the appropriate IDP tenant
+Data Consumer -> PHAC Federated Gateway.IDP Aggregator: "[1] Auth/Authz"
+# Once Authenticated, the client forwards request to the federated GraphQL gateway
+Data Consumer -> PHAC Federated Gateway.API Gateway: "[3] Request w/ JWT"
