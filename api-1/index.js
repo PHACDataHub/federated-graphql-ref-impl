@@ -1,9 +1,15 @@
 import { ApolloServer } from '@apollo/server';
 import { startStandaloneServer } from '@apollo/server/standalone';
+
+import { makeExecutableSchema } from '@graphql-tools/schema';
+import { applyMiddleware } from 'graphql-middleware';
+
 import jwt from "jsonwebtoken";
 
 import { typeDefs } from './schema.js';
 import { resolvers } from './resolvers.js';
+import permissions from './permissions.js';
+
 // Environment variables
 const JWT_VERIFY_SECRET = process.env.JWT_VERIFY_SECRET || "changeme"
 
@@ -24,8 +30,10 @@ function getClaims(req) {
 
 // server setup
 const server = new ApolloServer({
-    typeDefs,
-    resolvers,
+    schema: applyMiddleware(
+        makeExecutableSchema({ typeDefs, resolvers }),
+        permissions
+    ),
 })
 
 const { url } = await startStandaloneServer(server, {
