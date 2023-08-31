@@ -1,6 +1,16 @@
 import db from './_db.js';
 
 export const resolvers = {
+    Author: {
+        reviews(author) {
+            return db.reviews.filter((review) => review.author_id === author.id);
+        }
+    },
+    Game: {
+        reviews(game) {
+            return db.reviews.filter((review) => review.game_id === game.id);
+        }
+    },
     Query: {
         reviews() {
             return db.reviews;
@@ -8,9 +18,6 @@ export const resolvers = {
         review(_, args) {
             return db.reviews.find((review) => review.id === args.id);
         },
-    },
-    Mutation: {
-
     },
     Review: {
         __resolveReference(ref) {
