@@ -1,8 +1,14 @@
-import { shield, rule } from "graphql-shield";
+import { shield, rule, and } from "graphql-shield";
 
-const isAuthenticated = rule()((parent, args, context) => {
-    if (context.claims) {
-        return context.claims !== undefined;
+const canReadReviews = rule()((parent, args, context) => {
+    if (!context.claims) {
+        return false;
+    }
+    if (!("prov-on" in context.claims)) {
+        return false;
+    }
+    if (context.claims["prov-on"].reviews) {
+        return context.claims["prov-on"].reviews.includes("read");
     }
     return false;
 });
@@ -10,14 +16,14 @@ const isAuthenticated = rule()((parent, args, context) => {
 // TODO: Add default deny rule
 export default shield({
     Review: {
-        id: isAuthenticated,
-        rating: isAuthenticated,
-        content: isAuthenticated,
-        game: isAuthenticated,
-        author: isAuthenticated,
+        id: canReadReviews,
+        rating: canReadReviews,
+        content: canReadReviews,
+        game: canReadReviews,
+        author: canReadReviews,
     },
     Query: {
-        reviews: isAuthenticated,
-        review: isAuthenticated,
+        reviews: canReadReviews,
+        review: canReadReviews,
     },
 });    

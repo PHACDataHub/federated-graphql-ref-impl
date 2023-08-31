@@ -1,37 +1,34 @@
 import { shield, rule, and } from "graphql-shield";
 
-const isAuthenticated = rule()((parent, args, context) => {
-    if (context.claims) {
-        return context.claims !== undefined;
+const isManager = rule()((parent, args, context) => {
+    if (!context.claims) {
+        return false;
+    }
+    if ("prov-qc" in context.claims) {
+        return context.claims["prov-qc"].role === "Manager";
     }
     return false;
 });
 
-const isManager = rule()((parent, args, context) => {
-    if (context.claims) {
-        return context.claims.role === "Manager";
-    }
-    return false;
-});
 
 // TODO: Add default deny rule
 export default shield({
     Game: {
-        id: isAuthenticated,
-        title: isAuthenticated,
-        platform: isAuthenticated,
-        reviews: isAuthenticated,
+        id: isManager,
+        title: isManager,
+        platform: isManager,
+        reviews: isManager,
     },
     Author: {
-        id: isAuthenticated,
-        name: isAuthenticated,
-        verified: isAuthenticated,
-        reviews: isAuthenticated,
+        id: isManager,
+        name: isManager,
+        verified: isManager,
+        reviews: isManager,
     },
     Query: {
-        games: isAuthenticated,
-        game: isAuthenticated,
-        authors: and(isAuthenticated, isManager),
-        author: and(isAuthenticated, isManager),
+        games: isManager,
+        game: isManager,
+        authors: isManager,
+        author: isManager,
     },
 });    
