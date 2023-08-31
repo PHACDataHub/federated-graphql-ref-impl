@@ -43,7 +43,7 @@ Province of Quebec: {
     shape: image
     icon: assets/graphql-logo.svg
   }
-  Differential Privacy Engine: {
+  Authorization Engine: {
     shape: image
     icon: https://icons.terrastruct.com/azure%2FIdentity%20Service%20Color%2FConditional%20Access.svg
   }
@@ -54,10 +54,10 @@ Province of Quebec: {
 
   # Data Product API fetches requested data from database
   Data Product API -> Database: "[5] API calls DB"
-  # Differential Privacy impl. censors data instances based on JWT claims of current request context
-  Database -> Differential Privacy Engine: "[6] JWT Claims Evaluated Against Privacy Rules"
+  # Authorization impl. censors data instances based on JWT claims of current request context
+  Database -> Authorization Engine: "[6] JWT Claims Evaluated Against Privacy Rules"
   # Data Product API only returns fields that comply with the claims of the current request
-  Differential Privacy Engine -> Data Product API: "[7] Censored Data Returned"
+  Authorization Engine -> Data Product API: "[7] Censored Data Returned"
 }
 
 # Data Product Example: Province of Ontario
@@ -106,7 +106,7 @@ Province of Ontario: {
     shape: image
     icon: assets/graphql-logo.svg
   }
-  Differential Privacy Engine: {
+  Authorization Engine: {
     shape: image
     icon: https://icons.terrastruct.com/azure%2FIdentity%20Service%20Color%2FConditional%20Access.svg
   }
@@ -117,10 +117,10 @@ Province of Ontario: {
 
   # Data Product API fetches requested data from database
   Data Product API -> Database
-  # Differential Privacy impl. censors data instances based on JWT claims of current request context
-  Database -> Differential Privacy Engine
+  # Authorization impl. censors data instances based on JWT claims of current request context
+  Database -> Authorization Engine
   # Data Product API only returns fields that comply with the claims of the current request
-  Differential Privacy Engine -> Data Product API
+  Authorization Engine -> Data Product API
 }
 
 # Data Product Example: DMIA DS Project
@@ -138,7 +138,7 @@ Province of Ontario: {
 #       shape: image
 #       icon: assets/graphql-logo.svg
 #     }
-#     Differential Privacy Engine: {
+#     Authorization Engine: {
 #       shape: image
 #       icon: https://icons.terrastruct.com/azure%2FIdentity%20Service%20Color%2FConditional%20Access.svg
 #     }
