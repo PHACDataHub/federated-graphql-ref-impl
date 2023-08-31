@@ -19,7 +19,7 @@ We can see both the decoded and base64 encoded tokens for each requestor.
 
 **Decoded JWT**
 
-```json
+```javascript
 // Header
 {
   "alg": "HS256",
@@ -49,7 +49,7 @@ eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiTWFuYWdlciIsIm5hbWUiOiJKYW5lIER
 
 **Decoded JWT**
 
-```json
+```javascript
 // Header
 {
   "alg": "HS256",
