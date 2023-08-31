@@ -22,13 +22,6 @@ export default shield({
         platform: isAuthenticated,
         reviews: isAuthenticated,
     },
-    Review: {
-        id: isAuthenticated,
-        rating: isAuthenticated,
-        content: isAuthenticated,
-        game: isAuthenticated,
-        author: and(isAuthenticated, isManager),
-    },
     Author: {
         id: isAuthenticated,
         name: isAuthenticated,
@@ -36,15 +29,9 @@ export default shield({
         reviews: isAuthenticated,
     },
     Query: {
-        reviews: isAuthenticated,
-        review: isAuthenticated,
         games: isAuthenticated,
         game: isAuthenticated,
         authors: and(isAuthenticated, isManager),
         author: and(isAuthenticated, isManager),
-    },
-    Mutation: {
-        deleteGame: isAuthenticated,
-        addGame: isAuthenticated,
     },
 });    

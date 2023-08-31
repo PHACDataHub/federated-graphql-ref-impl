@@ -15,20 +15,16 @@ export const typeDefs = gql`
     reviews: [Review!]
   }
 
+  extend type Review @key(fields: "id") {
+    id: ID! @external
+    author: Author
+    game: Game
+  }
+
   extend type Query {
     games: [Game]
     game(id: ID!): Game
     authors: [Author]
     author(id: ID!): Author
-  }
-
-  type Mutation {
-    deleteGame(id: ID!): [Game]
-    addGame(game: AddGameInput!): Game
-  }
-
-  input AddGameInput {
-    title: String!,
-    platform: [String!]!
   }
 `;

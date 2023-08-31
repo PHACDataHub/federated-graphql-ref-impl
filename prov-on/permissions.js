@@ -1,4 +1,4 @@
-import { shield, rule, and } from "graphql-shield";
+import { shield, rule } from "graphql-shield";
 
 const isAuthenticated = rule()((parent, args, context) => {
     if (context.claims) {
@@ -14,12 +14,10 @@ export default shield({
         rating: isAuthenticated,
         content: isAuthenticated,
         game: isAuthenticated,
-        author: and(isAuthenticated, isManager),
+        author: isAuthenticated,
     },
     Query: {
         reviews: isAuthenticated,
         review: isAuthenticated,
-    },
-    Mutation: {
     },
 });    

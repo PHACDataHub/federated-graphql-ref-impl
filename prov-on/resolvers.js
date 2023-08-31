@@ -13,11 +13,14 @@ export const resolvers = {
 
     },
     Review: {
-        author(parent) {
-            return // TODO 
+        __resolveReference(ref) {
+            return db.reviews.find((review) => review.id === ref.id);
         },
-        game(parent) {
-            return // TODO 
+        author(review) {
+            return review.author.map(id => ({ __typename: "Author", id }));
+        },
+        game(review) {
+            return review.game.map(id => ({ __typename: "Game", id }));
         }
     }
 }

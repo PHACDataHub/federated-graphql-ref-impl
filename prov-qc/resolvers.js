@@ -15,28 +15,20 @@ export const resolvers = {
             return db.authors.find((author) => author.id === args.id);
         }
     },
-    Mutation: {
-        deleteGame(_, args) {
-            db.games = db.games.filter((g) => g.id !== args.id);
-            return db.games
-        },
-        addGame(_, args) {
-            let game = {
-                ...args.game,
-                id: Math.floor(Math.random() * 10000).toString(),
-            };
-            db.games.push(game);
-            return game;
-        }
-    },
     Game: {
-        reviews(parent) {
-            return  // TODO
+        __resolveReference(ref) {
+            return db.games.find((game) => game.id === ref.id);
+        },
+        reviews(game) {
+            return game.reviews.map(id => ({ __typename: "Review", id }));
         }
     },
     Author: {
-        reviews(parent) {
-            return  // TODO
+        __resolveReference(ref) {
+            return db.authors.find((author) => author.id === ref.id);
+        },
+        reviews(author) {
+            return author.reviews.map(id => ({ __typename: "Review", id }));
         }
     },
 }

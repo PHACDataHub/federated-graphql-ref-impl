@@ -25,6 +25,10 @@ const gateway = new ApolloGateway({
             {
                 name: "prov-qc",
                 url: "http://localhost:4001"
+            },
+            {
+                name: "prov-on",
+                url: "http://localhost:4002"
             }
         ]
     }),

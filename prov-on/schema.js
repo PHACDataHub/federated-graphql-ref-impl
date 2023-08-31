@@ -9,11 +9,18 @@ export const typeDefs = gql`
     author: Author!
   }
 
+  extend type Game @key(fields: "id") {
+    id: ID! @external
+    reviews: [Review]
+  }
+
+  extend type Author @key(fields: "id") {
+    id: ID! @external
+    reviews: [Review]
+  }
+
   extend type Query {
     reviews: [Review]
     review(id: ID!): Review
-  }
-
-  type Mutation {
   }
 `;
