@@ -15,17 +15,14 @@ const JWT_VERIFY_SECRET = process.env.JWT_VERIFY_SECRET || "changeme"
 
 // TODO: move getClaims to separate module
 function getClaims(req) {
-    let claims = null;
     // Header names in Express are auto-converted to lowercase
     let token = req.headers['x-access-token'] || req.headers['authorization'];
-
-    // Remove Bearer from string
-    token = token.replace(/^Bearer\s+/, "");
-    // TODO: this needs to fail gracefully if there is no token or token is invalid
     if (token) {
-        claims = jwt.verify(token, JWT_VERIFY_SECRET);
+        // Remove Bearer from string
+        token = token.replace(/^Bearer\s+/, "");
+        return jwt.verify(token, JWT_VERIFY_SECRET);
     }
-    return claims;
+    return null;
 }
 
 // server setup
