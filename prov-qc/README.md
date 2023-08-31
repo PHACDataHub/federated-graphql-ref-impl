@@ -20,18 +20,18 @@ We can see both the decoded and base64 encoded tokens for each requestor.
 **Decoded JWT**
 
 ```json
-# Header
+// Header
 {
   "alg": "HS256",
   "typ": "JWT"
 }
-# Payload (claims)
+// Payload (claims)
 {
   "role": "Manager",
   "name": "Jane Doe",
   "iat": 1516239022
 }
-# Verify Signature
+// Verify Signature
 HMACSHA256(
   base64UrlEncode(header) + "." +
   base64UrlEncode(payload),
@@ -50,18 +50,18 @@ eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiTWFuYWdlciIsIm5hbWUiOiJKYW5lIER
 **Decoded JWT**
 
 ```json
-# Header
+// Header
 {
   "alg": "HS256",
   "typ": "JWT"
 }
-# Payload (claims)
+// Payload (claims)
 {
   "role": "Employee",
   "name": "John Doe",
   "iat": 1516239022
 }
-# Verify Signature
+// Verify Signature
 HMACSHA256(
   base64UrlEncode(header) + "." +
   base64UrlEncode(payload),
