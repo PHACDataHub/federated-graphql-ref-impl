@@ -32,7 +32,15 @@ The envisioned flow of a request from a data consumer looks as followed (illustr
 
 ## Federated GraphQL Query Example
 
-### Supergraph Structure
+### Subgraph Structure
+
+In this illustrative example, there is one logical supergraph comprised of two subgraphs: `prov-qc` and `prov-on`.
+Importantly, each subgraph is owned by a separate entity, yet the two subgraphs depend on eachother.
+The diagram below illustrates the `prov-qc` and `prov-on` subgraphs, along with their respective dependencies.
+
+![example-supergraph](docs/subgraphs.svg)
+
+### How Fields are Resolved Across Subgraphs
 
 > TODO
 

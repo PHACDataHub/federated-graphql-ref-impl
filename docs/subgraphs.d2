@@ -1,0 +1,41 @@
+prov-on subgraph: {
+  #   shape: cloud
+  style: {
+    stroke: green
+  }
+  Review: {
+    id: id
+    rating: rating
+    content: content
+    game: Game
+    author: Author
+  }
+}
+
+prov-qc subgraph: {
+  #   shape: cloud
+  style: {
+    stroke: green
+  }
+  Game: {
+    id: id
+    title: title
+    platform: "platform"
+    platform.style.multiple: true
+    reviews: "Reviews"
+    reviews.style.multiple: true
+  }
+  Author: {
+    id: id
+    name: name
+    verified: verified
+    reviews: "Reviews"
+    reviews.style.multiple: true
+  }
+}
+
+prov-on subgraph.Review.game -> prov-qc subgraph.Game
+prov-on subgraph.Review.author -> prov-qc subgraph.Author
+
+prov-qc subgraph.Game.reviews -> prov-on subgraph.Review
+prov-qc subgraph.Author.reviews -> prov-on subgraph.Review
