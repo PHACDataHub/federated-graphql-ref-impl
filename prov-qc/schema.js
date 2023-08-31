@@ -1,7 +1,7 @@
 import { gql } from 'graphql-tag';
 
 export const typeDefs = gql`
-  type Game {
+  type Game @key(fields: "id") {
     id: ID!
     title: String!
     platform: [String!]!
@@ -23,7 +23,7 @@ export const typeDefs = gql`
     reviews: [Review!]
   }
 
-  type Query {
+  extend type Query {
     reviews: [Review]
     review(id: ID!): Review
     games: [Game]

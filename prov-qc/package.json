@@ -12,6 +12,7 @@
   "type": "module",
   "dependencies": {
     "@apollo/server": "^4.9.2",
+    "@apollo/subgraph": "^2.5.3",
     "@graphql-tools/schema": "^10.0.0",
     "graphql": "^16.8.0",
     "graphql-middleware": "^6.1.35",

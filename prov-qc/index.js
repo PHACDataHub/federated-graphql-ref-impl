@@ -1,7 +1,8 @@
 import { ApolloServer } from '@apollo/server';
 import { startStandaloneServer } from '@apollo/server/standalone';
 
-import { makeExecutableSchema } from '@graphql-tools/schema';
+import { buildSubgraphSchema } from '@apollo/subgraph/dist/buildSubgraphSchema.js';
+
 import { applyMiddleware } from 'graphql-middleware';
 
 import jwt from "jsonwebtoken";
@@ -9,6 +10,8 @@ import jwt from "jsonwebtoken";
 import { typeDefs } from './schema.js';
 import { resolvers } from './resolvers.js';
 import permissions from './permissions.js';
+
+const PORT = 4001;
 
 // Environment variables
 const JWT_VERIFY_SECRET = process.env.JWT_VERIFY_SECRET || "changeme"
@@ -28,14 +31,14 @@ function getClaims(req) {
 // server setup
 const server = new ApolloServer({
     schema: applyMiddleware(
-        makeExecutableSchema({ typeDefs, resolvers }),
+        buildSubgraphSchema([{ typeDefs, resolvers }]),
         permissions
     ),
 })
 
 const { url } = await startStandaloneServer(server, {
     listen: {
-        port: 4000
+        port: PORT
     },
     // Context function should be async and return an object
     context: async ({ req }) => ({
@@ -43,4 +46,4 @@ const { url } = await startStandaloneServer(server, {
     }),
 });
 
-console.log('Server ready at port', 4000);
+console.log('Prov QC service is ready at port', PORT);
