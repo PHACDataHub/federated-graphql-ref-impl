@@ -46,4 +46,4 @@ const { url } = await startStandaloneServer(server, {
     }),
 });
 
-console.log('Prov QC service is ready at port', PORT);
+console.log('Prov ON service is ready at port', PORT);

@@ -8,14 +8,6 @@ export const typeDefs = gql`
     reviews: [Review!]
   }
 
-  type Review {
-    id: ID!,
-    rating: Int!
-    content: String!
-    game: Game!
-    author: Author!
-  }
-
   type Author {
     id: ID!
     name: String!
@@ -24,8 +16,6 @@ export const typeDefs = gql`
   }
 
   extend type Query {
-    reviews: [Review]
-    review(id: ID!): Review
     games: [Game]
     game(id: ID!): Game
     authors: [Author]
