@@ -1,0 +1,74 @@
+#  _ __  _ __ _____   __      __ _  ___ 
+# | '_ \| '__/ _ \ \ / /____ / _` |/ __|
+# | |_) | | | (_) \ V /_____| (_| | (__ 
+# | .__/|_|  \___/ \_/       \__, |\___|
+# |_|                           |_|     
+
+prov-qc subgraph: {
+  shape: circle
+  Game: {
+    shape: circle
+    id: {
+      key: |javascript
+        @key(fields: "id")
+      |
+    }
+    id.shape: circle
+    title: title
+    title.shape: circle
+    platform: "platform"
+    platform.shape: circle
+    platform.style.multiple: true
+    reviews: "Reviews"
+    reviews.shape: circle
+    reviews.style.multiple: true
+    resolveReference: {
+      shape: circle
+      style: {
+        stroke: green
+      }
+      fn: |javascript
+        __resolveReference(ref)
+      |
+    }
+  }
+  Author: {
+    shape: circle
+    id: {
+      key: |javascript
+        @key(fields: "id")
+      |
+    }
+    id.shape: circle
+    name: name
+    name.shape: circle
+    verified: verified
+    verified.shape: circle
+    reviews: "Reviews"
+    reviews.shape: circle
+    reviews.style.multiple: true
+    resolveReference: {
+      shape: circle
+      style: {
+        stroke: green
+      }
+      fn: |javascript
+        __resolveReference(ref)
+      |
+    }
+  }
+
+  "[External] Review": {
+    shape: circle
+    id: {
+      key: |javascript
+        @key(fields: "id")
+      |
+    }
+    id.shape: circle
+    author: Author
+    author.shape: circle
+    game: Game
+    game.shape: circle
+  }
+}

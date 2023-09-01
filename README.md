@@ -42,9 +42,26 @@ The diagram below illustrates the `prov-qc` and `prov-on` subgraphs, along with 
 
 ### How Fields are Resolved Across Subgraphs
 
-> TODO
+Since `prov-qc` and `prov-on` are federated, each service maintains a data model of its subgraph; this data model is defined in each service's `schema.js` file.
+The figures below illustrate each entity's portion of the subgraph from the perspective of their individual data models.
 
-### Authorization (Authz)
+![prov-qc data model](docs/prov-qc-data-model.svg)
+![prov-on data model](docs/prov-on-data-model.svg)
+
+Importantly, `prov-qc` needs to be aware of a `Reivew` entity, but needs only to keep track of which `Review` IDs are associated with given `Author`s and `Game`s.
+Similarly, `prov-on` needs to be aware of the `Game` and `Author` entities, but needs only to keep track of which `Game` and `Author` IDs are associated with each `Review`.
+
+Since `prov-qc` holds data for entities that are referenced in other subgraphs (`Game` and `Author`), it needs to have the ability to resolve references to `Game` and `Author` entities from other subgraphs.
+Similarly, `prov-on` holds data for `Review` entities that are referenced in other subgraphs, and needs to be able to resolve `Review` references from those subgraphs.
+This reference resolution capability is implemented with the `__resolveReference` function.
+The `resolveReference` node on the diagram is outlined in green to indicate that it is implemented separately in the `resolvers.js` module rather than the `schema.js` module where the subgraphs are defined.
+
+
+
+
+
+
+### Authz (JWTs)
 
 Suppose a client (data requestor) wants to submit a GraphQL query against the API gateway, and their query spans both subgraphs.
 Since the combined object requested in the GraphQL query will consist of elements from both federated APIs, the client needs to have the appropriate JWT claims for each API.
@@ -88,6 +105,8 @@ HMACSHA256(
 ```
 eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwcm92LXFjIjp7InJvbGUiOiJNYW5hZ2VyIn0sInByb3Ytb24iOnsicmV2aWV3cyI6WyJyZWFkIiwid3JpdGUiXX0sIm5hbWUiOiJKYW5lIERvZSIsImlhdCI6MTUxNjIzOTAyMn0.sxCKeHno1vH6luq17IzuvMNMWL6_N7sV3HMTM6xpup8
 ```
+
+### Authz (GraphQL Shield)
 
 ### Attribution
 - GraphQL icon borrowed from [graphql.org](https://graphql.org/brand/).

@@ -1,35 +1,51 @@
 prov-on subgraph: {
-  #   shape: cloud
+  shape: circle
   style: {
     stroke: green
   }
   Review: {
+    shape: circle
     id: id
+    id.shape: circle
     rating: rating
+    rating.shape: circle
     content: content
+    content.shape: circle
     game: Game
+    game.shape: circle
     author: Author
+    author.shape: circle
   }
 }
 
 prov-qc subgraph: {
-  #   shape: cloud
+  shape: circle
   style: {
     stroke: green
   }
   Game: {
+    shape: circle
     id: id
+    id.shape: circle
     title: title
+    title.shape: circle
     platform: "platform"
+    platform.shape: circle
     platform.style.multiple: true
     reviews: "Reviews"
+    reviews.shape: circle
     reviews.style.multiple: true
   }
   Author: {
+    shape: circle
     id: id
+    id.shape: circle
     name: name
+    name.shape: circle
     verified: verified
+    verified.shape: circle
     reviews: "Reviews"
+    reviews.shape: circle
     reviews.style.multiple: true
   }
 }
