@@ -1,0 +1,130 @@
+# Data Product Example: Province/Territory
+
+Province/Territory: {
+  style: {
+    stroke: green
+  }
+  Static File Server: {
+    shape: image
+    icon: https://icons.terrastruct.com/essentials%2F112-server.svg
+  }
+  IAM: {
+    IAM Tenant: {
+      shape: image
+      icon: https://icons.terrastruct.com/azure%2FIdentity%20Service%20Color%2FActive%20Directory.svg
+    }
+    Security Group A: {
+      shape: image
+      icon: https://icons.terrastruct.com/azure%2FNetworking%20Service%20Color%2FApplication%20Security%20Groups.svg
+    }
+    Security Group B: {
+      shape: image
+      icon: https://icons.terrastruct.com/azure%2FNetworking%20Service%20Color%2FApplication%20Security%20Groups.svg
+    }
+    Users A: {
+      shape: image
+      icon: https://icons.terrastruct.com/azure%2FIdentity%20Service%20Color%2FManaged%20Identities.svg
+    }
+    Users B: {
+      shape: image
+      icon: https://icons.terrastruct.com/essentials%2F359-users.svg
+    }
+    JWT Claims A: {
+      shape: image
+      icon: https://jwt.io/img/icon.svg
+    }
+    JWT Claims B: {
+      shape: image
+      icon: https://jwt.io/img/icon.svg
+    }
+    # User Group A gets JWT Claims A via membership in Security Group A
+    JWT Claims A -> Users A <- Security Group A
+    # Same thing with Group B
+    JWT Claims B -> Users B <- Security Group B
+  }
+  Data Product API: {
+    shape: image
+    icon: assets/graphql-logo.svg
+  }
+  Authorization Engine: {
+    shape: image
+    icon: https://icons.terrastruct.com/azure%2FIdentity%20Service%20Color%2FConditional%20Access.svg
+  }
+  Database: {
+    shape: image
+    icon: https://icons.terrastruct.com/azure%2FDatabases%20Service%20Color%2FAzure%20Database%20for%20PostgreSQL%20servers.svg
+  }
+
+  # Data Product API fetches requested data from database
+  Data Product API -> Authorization Engine: "[9] GraphQL Shield Ensures Request is Authorized"
+  # Authorization impl. censors data instances based on JWT claims of current request context
+  Authorization Engine -> Database: "[10] Authorized Mutation Written to Database"
+}
+
+#              _       _               __                          
+#  _ __   ___ (_)_ __ | |_       ___  / _|       ___ __ _ _ __ ___ 
+# | '_ \ / _ \| | '_ \| __|____ / _ \| |_ _____ / __/ _` | '__/ _ \
+# | |_) | (_) | | | | | ||_____| (_) |  _|_____| (_| (_| | | |  __/
+# | .__/ \___/|_|_| |_|\__|     \___/|_|        \___\__,_|_|  \___|
+# |_|                                                              
+
+Point of Care: {
+  style: {
+    stroke: red
+  }
+  Device: {
+    shape: image
+    icon: https://icons.terrastruct.com/tech%2F052-smartphone-3.svg
+  }
+
+  Browser: {
+    shape: image
+    icon: https://icons.terrastruct.com/tech%2Fbrowser-2.svg
+  }
+
+  Client-Side PWA: {
+    "": {
+      shape: image
+      icon: https://icons.terrastruct.com/dev%2Fjavascript.svg
+    }
+    Form
+    Data Validation
+    Authn Client
+    GraphQL Client: {
+      shape: image
+      icon: assets/graphql-logo.svg
+    }
+  }
+}
+
+# Federated API Gateway
+
+PHAC Federated Gateway: {
+  API Gateway: {
+    shape: image
+    icon: assets/graphql-logo.svg
+  }
+
+  IDP Aggregator: {
+    shape: image
+    icon: https://raw.githubusercontent.com/ory/.github/README/img/ory.png
+  }
+}
+
+# Client device can run PWAs on browser to avoid building/distributing native software across multiple platform/OS combinations.
+Point of Care.Device -> Point of Care.Browser: "[1] Client Device Runs Browser"
+# Client device at point of care requests PWA from P/T static file server
+Point of Care.Browser <-> Province/Territory.Static File Server: "[2] Requests URL for PWA"
+# Client runs PWA on device browser
+Point of Care.Browser -> Point of Care.Client-Side PWA: "[3] PWA runs on browser"
+# Data are immediately validated on the client side
+Point of Care.Client-Side PWA.Form -> Point of Care.Client-Side PWA.Data Validation: "[4] Client-Side Data Validation"
+# webapp auth client gets appropriate JWT from IDP
+Point of Care.Client-Side PWA.Data Validation -> Point of Care.Client-Side PWA.Authn Client
+Point of Care.Client-Side PWA.Authn Client <-> PHAC Federated Gateway.IDP Aggregator: "[5] Authenticate Against IDP Aggregator"
+PHAC Federated Gateway.IDP Aggregator <-> Province/Territory.IAM.IAM Tenant: "[6] Delegate to Province/Territory IDP"
+# Send request with JWT to PHAC Federated GraphQL Gateway with GraphQL Client
+Point of Care.Client-Side PWA.Authn Client -> Point of Care.Client-Side PWA.GraphQL Client
+Point of Care.Client-Side PWA.GraphQL Client -> PHAC Federated Gateway.API Gateway: "[7] GraphQL Mutation with JWT"
+# GraphQL Gateway forwards request to Province/Territory GraphQL API
+PHAC Federated Gateway.API Gateway -> Province/Territory.Data Product API: "[8] GraphQL Mutation Routed to API"

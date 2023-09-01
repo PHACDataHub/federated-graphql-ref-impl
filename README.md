@@ -30,7 +30,20 @@ The envisioned flow of a request from a data consumer looks as followed (illustr
 6. The data owner implements a differential privacy engine that uses the claims in the JWT attached to the request to determine which fields/instances the Data Consumer has access to. The details of this differential privacy engine are entirely managed by the Province of Quebec.
 7. A data payload with the appropriate censoring applied is returned to the API gateway. The API gateway combines the data returned by Province of Quebec with data returned by any other federated data owners, and returns the result to the Data Consumer.
 
+# Extension to Point of Care Data Collection
+
+An extension of this architecture is to consider what it would look like for a data collection site to use a Federated GraphQL gateway to write data to the appropriate province/territory's GraphQL API.
+With this setup, data could be validated on the client-side at the time of data collection, and routed directly to the appropriate Province/Territory's GraphQL API via the Federated GraphQL API Gateway.
+
+
+![point-of-care architecture example](docs/pos-write-to-gateway.svg)
+
+
 ## Federated GraphQL Query Example
+
+### Running the Example
+
+> TODO
 
 ### Subgraph Structure
 
