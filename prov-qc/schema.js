@@ -8,7 +8,7 @@ export const typeDefs = gql`
     reviews: [Review!]
   }
 
-  type Author {
+  type Author @key(fields: "id") {
     id: ID!
     name: String!
     verified: Boolean!

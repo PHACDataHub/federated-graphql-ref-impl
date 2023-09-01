@@ -1,7 +1,7 @@
 import { gql } from 'graphql-tag';
 
 export const typeDefs = gql`
-  type Review {
+  type Review @key(fields: "id") {
     id: ID!,
     rating: Int!
     content: String!
