@@ -7,7 +7,8 @@ const PORT = 4000;
 
 // Environment variables
 const JWT_VERIFY_SECRET = process.env.JWT_VERIFY_SECRET || "changeme"
-
+const prov_qc_url = process.env.QC_URL
+const prov_on_url = process.env.ON_URL
 
 // Set shared context value for all requests going through the gateway
 class AuthenticatedDataSource extends RemoteGraphQLDataSource {
@@ -24,11 +25,13 @@ const gateway = new ApolloGateway({
         subgraphs: [
             {
                 name: "prov-qc",
-                url: "http://localhost:4001"
+                //url: "http://localhost:4001"
+                url: prov_qc_url
             },
             {
                 name: "prov-on",
-                url: "http://localhost:4002"
+                //url: "http://localhost:4002"
+                url: prov_on_url
             }
         ]
     }),
@@ -44,6 +47,7 @@ const server = new ApolloServer({
 
 const { url } = await startStandaloneServer(server, {
     listen: {
+        host: '0.0.0.0',
         port: PORT
     },
     context: async ({ req }) => {
