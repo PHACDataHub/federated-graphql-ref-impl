@@ -43,7 +43,24 @@ With this setup, data could be validated on the client-side at the time of data 
 
 ### Running the Example
 
-> TODO
+#### Containerize the application
+
+In order to run the application in docker containers, Individual Dockerfiles are available for Gateway and Subgraph APIs in their respective folders.
+Also, since both the subgraph APIs should be up and running before gateway API comes up, therefore, we created a Docker Compose file (`federated-graphql.yaml`)  to build images in specific order.
+
+`docker compose -f federated-graphql.yaml up` will build the individual docker images for gateway and subgraph APIs and run them in their respective docker containers.
+
+Once all the 3 containers are up, API gateway can be accessed via [http://localhost:4000](http:localhost:4000) and it will internally interact with subgraph APIs to fetch the required information. API call to gateway also requires the authorization information passed in the header. Authorization token for the purpose of this demo is:
+
+**Base 64 Encoded JWT**
+
+```
+eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwcm92LXFjIjp7InJvbGUiOiJNYW5hZ2VyIn0sInByb3Ytb24iOnsicmV2aWV3cyI6WyJyZWFkIiwid3JpdGUiXX0sIm5hbWUiOiJKYW5lIERvZSIsImlhdCI6MTUxNjIzOTAyMn0.sxCKeHno1vH6luq17IzuvMNMWL6_N7sV3HMTM6xpup8
+```
+
+Another point worth noting here is that once all the services are running in their respective containers, then in order for gateway API to interact with subgraph APIs, we need to use container's names and we are injecting those updated url via environment variables in docker compose file.
+
+
 
 ### Subgraph Structure
 

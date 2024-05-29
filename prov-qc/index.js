@@ -11,7 +11,7 @@ import { typeDefs } from './schema.js';
 import { resolvers } from './resolvers.js';
 import permissions from './permissions.js';
 
-const PORT = 4001;
+const PORT = 8080;
 
 // Environment variables
 const JWT_VERIFY_SECRET = process.env.JWT_VERIFY_SECRET || "changeme"
@@ -38,6 +38,7 @@ const server = new ApolloServer({
 
 const { url } = await startStandaloneServer(server, {
     listen: {
+        host: '0.0.0.0',
         port: PORT
     },
     // Context function should be async and return an object

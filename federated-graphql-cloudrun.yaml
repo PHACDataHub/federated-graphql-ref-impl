@@ -1,0 +1,17 @@
+version: '3'
+
+networks:
+  backend:
+    driver: bridge
+    
+services: 
+  gateway:
+    container_name: fed-gateway
+    build: ./federated-gateway
+    ports:
+      - "4000:4000"
+    environment:
+      QC_URL: https://prov-qc-api-6ef5a33mba-nn.a.run.app/
+      ON_URL: https://prov-on-api-6ef5a33mba-nn.a.run.app/
+    networks:
+      - backend      
