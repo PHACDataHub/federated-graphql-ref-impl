@@ -46,7 +46,7 @@ With this setup, data could be validated on the client-side at the time of data 
 #### Containerize the application
 
 In order to run the application in docker containers, Individual Dockerfiles are available for Gateway and Subgraph APIs in their respective folders.
-Also, since both the subgraph APIs should be up and running before gateway API comes up, therefore, we created a Docker Compose file (`federated-graphql.yaml`)  to build images in specific order.
+Also, since both subgraph APIs should be up and running before gateway API comes up, therefore, we created a Docker Compose file (`federated-graphql.yaml`)  to build images in specific order.
 
 `docker compose -f federated-graphql.yaml up` will build the individual docker images for gateway and subgraph APIs and run them in their respective docker containers.
 
