@@ -13,22 +13,14 @@ const isManager = rule()((parent, args, context) => {
 
 // TODO: Add default deny rule
 export default shield({
-    Game: {
-        id: isManager,
-        title: isManager,
-        platform: isManager,
-        reviews: isManager,
-    },
     Author: {
         id: isManager,
-        name: isManager,
-        verified: isManager,
-        reviews: isManager,
+        pathogen: isManager,
+        alert_issued: isManager,
+        cases: isManager,
     },
     Query: {
-        games: isManager,
-        game: isManager,
-        authors: isManager,
-        author: isManager,
+        outbreaks: isManager,
+        outbreak: isManager,
     },
 });    
