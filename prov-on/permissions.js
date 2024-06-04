@@ -19,6 +19,7 @@ export default shield({
         id: canReadReviews,
         age: canReadReviews,
         gender: canReadReviews,
+        province: canReadReviews,
         status: canReadReviews,
         outbreak: canReadReviews,
     },

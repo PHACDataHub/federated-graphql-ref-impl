@@ -6,6 +6,7 @@ export const typeDefs = gql`
     id: ID!
     pathogen: String!
     alert_issued: Boolean!
+    date_of_reporting: String!
     cases: [Review!]
   }
 

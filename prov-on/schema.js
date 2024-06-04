@@ -5,6 +5,7 @@ export const typeDefs = gql`
     id: ID!,
     age: Int!
     gender: String!
+    province: String!
     status: String!
     outbreak: Author!
   }

@@ -17,6 +17,7 @@ export default shield({
         id: isManager,
         pathogen: isManager,
         alert_issued: isManager,
+        date_of_reporting: isManager,
         cases: isManager,
     },
     Query: {
