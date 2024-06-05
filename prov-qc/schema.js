@@ -1,30 +1,22 @@
 import { gql } from 'graphql-tag';
 
 export const typeDefs = gql`
-  type Game @key(fields: "id") {
-    id: ID!
-    title: String!
-    platform: [String!]!
-    reviews: [Review!]
-  }
 
   type Author @key(fields: "id") {
     id: ID!
-    name: String!
-    verified: Boolean!
-    reviews: [Review!]
+    pathogen: String!
+    alert_issued: Boolean!
+    date_of_reporting: String!
+    cases: [Review!]
   }
 
   extend type Review @key(fields: "id") {
     id: ID! @external
-    author: Author
-    game: Game
+    outbreak: Author
   }
 
   extend type Query {
-    games: [Game]
-    game(id: ID!): Game
-    authors: [Author]
-    author(id: ID!): Author
+    outbreaks: [Author]
+    outbreak(id: ID!): Author
   }
 `;

@@ -6,16 +6,11 @@ export const resolvers = {
             return db.reviews.filter((review) => review.author_id === author.id);
         }
     },
-    Game: {
-        reviews(game) {
-            return db.reviews.filter((review) => review.game_id === game.id);
-        }
-    },
     Query: {
-        reviews() {
+        cases() {
             return db.reviews;
         },
-        review(_, args) {
+        case(_, args) {
             return db.reviews.find((review) => review.id === args.id);
         },
     },
@@ -23,11 +18,8 @@ export const resolvers = {
         __resolveReference(ref) {
             return db.reviews.find((review) => review.id === ref.id);
         },
-        author(review) {
-            return review.author.map(id => ({ __typename: "Author", id }));
-        },
-        game(review) {
-            return review.game.map(id => ({ __typename: "Game", id }));
+        outbreak(review) {
+            return review.author.map(id => ({ __typename: "Outbreak", id }));
         }
     }
 }

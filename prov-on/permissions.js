@@ -17,13 +17,14 @@ const canReadReviews = rule()((parent, args, context) => {
 export default shield({
     Review: {
         id: canReadReviews,
-        rating: canReadReviews,
-        content: canReadReviews,
-        game: canReadReviews,
-        author: canReadReviews,
+        age: canReadReviews,
+        gender: canReadReviews,
+        province: canReadReviews,
+        status: canReadReviews,
+        outbreak: canReadReviews,
     },
     Query: {
-        reviews: canReadReviews,
-        review: canReadReviews,
+        cases: canReadReviews,
+        case: canReadReviews,
     },
 });    
